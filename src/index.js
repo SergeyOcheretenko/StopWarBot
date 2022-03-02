@@ -26,7 +26,6 @@ const savePerson = (id, username) => {
         }   
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     } 
 }
 
@@ -36,7 +35,6 @@ bot.start(async (ctx) => {
         savePerson(ctx.message.chat.id, ctx.message.from.username);
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 });
 
@@ -46,7 +44,6 @@ bot.help(async (ctx) => {
         savePerson(ctx.message.chat.id, ctx.message.from.username);
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 })
 
@@ -55,7 +52,6 @@ bot.command('chat_id', async ctx => {
         await ctx.reply(ctx.message.chat.id);
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 })
 
@@ -65,7 +61,6 @@ bot.command('poster', async ctx => {
         await ctx.reply(script.thanks)
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 })
 
@@ -74,7 +69,6 @@ bot.command('manual', async ctx => {
         await ctx.reply(script.manual, Markup.keyboard([['Выбрать постер', 'Зачем это мне?']]).oneTime().resize())
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 })
 
@@ -83,7 +77,7 @@ bot.on('message', async ctx => {
         const text = ctx.message.text;
         
         if (text === 'Видеообращение') {
-            await ctx.reply(script.youtube)
+            await ctx.replyWithVideo('BAACAgIAAxkBAAIBi2IfuCKYW0v4OvdSr9SSA75oCAshAAIKFgAC4TT4SMK-RDLURhG0IwQ', Markup.keyboard([['Выбрать постер', 'Инструкции', 'Зачем это мне?']]).oneTime().resize())
         } else if (text === 'Текстовое обращение') {
             await ctx.reply(script.first_speak);
             await ctx.reply(script.second_speak);
@@ -100,7 +94,6 @@ bot.on('message', async ctx => {
         }
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
-        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 })
 
