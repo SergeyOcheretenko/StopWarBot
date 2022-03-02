@@ -7,65 +7,100 @@ const fs = require('fs')
 const bot = new Telegraf(data.token);
 
 const savePerson = (id, username) => {
-    let count = 1;
-    let flag = false;
-    const keys = Object.keys(persons);
-    for (const key of keys) {
-        if (persons[key][0] === id) {
-            flag = true;
-            break;
+    try {
+        let count = 1;
+        let flag = false;
+        const keys = Object.keys(persons);
+        for (const key of keys) {
+            if (persons[key][0] === id) {
+                flag = true;
+                break;
+            }
+            count++;
         }
-        count++;
-    }
 
-    if (!flag) {
-        persons[count] = [id, username];
-        const new_persons = JSON.stringify(persons);
-        fs.writeFileSync('./json/people.json', new_persons)
-    }    
+        if (!flag) {
+            persons[count] = [id, username];
+            const new_persons = JSON.stringify(persons);
+            fs.writeFileSync('./json/people.json', new_persons)
+        }   
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
+    } 
 }
 
 bot.start(async (ctx) => {
-    await ctx.reply(script.greeting, Markup.keyboard([['Видеообращение', 'Текстовое обращение']]).oneTime().resize())
-    savePerson(ctx.message.chat.id, ctx.message.from.username);
+    try {
+        await ctx.reply(script.greeting, Markup.keyboard([['Видеообращение', 'Текстовое обращение']]).oneTime().resize())
+        savePerson(ctx.message.chat.id, ctx.message.from.username);
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
+    }
 });
 
 bot.help(async (ctx) => {
-    await ctx.reply(script.greeting, Markup.keyboard([['Видеообращение', 'Текстовое обращение']]).oneTime().resize())
-    savePerson(ctx.message.chat.id, ctx.message.from.username);
+    try {
+        await ctx.reply(script.greeting, Markup.keyboard([['Видеообращение', 'Текстовое обращение']]).oneTime().resize())
+        savePerson(ctx.message.chat.id, ctx.message.from.username);
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
+    }
 })
 
 bot.command('chat_id', async ctx => {
-    await ctx.reply(ctx.message.chat.id);
+    try {
+        await ctx.reply(ctx.message.chat.id);
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
+    }
 })
 
 bot.command('poster', async ctx => {
-    await ctx.reply(script.drive)
-    await ctx.reply(script.thanks)
+    try {
+        await ctx.reply(script.drive)
+        await ctx.reply(script.thanks)
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
+    }
 })
 
 bot.command('manual', async ctx => {
-    await ctx.reply(script.manual, Markup.keyboard([['Выбрать постер', 'Зачем это мне?']]).oneTime().resize())
+    try {
+        await ctx.reply(script.manual, Markup.keyboard([['Выбрать постер', 'Зачем это мне?']]).oneTime().resize())
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
+    }
 })
 
 bot.on('message', async ctx => {
-    const text = ctx.message.text;
-    
-    if (text === 'Видеообращение') {
-        await ctx.reply(script.youtube)
-    } else if (text === 'Текстовое обращение') {
-        await ctx.reply(script.first_speak);
-        await ctx.reply(script.second_speak);
-        await ctx.reply(script.third_speak, Markup.keyboard([['Выбрать постер', 'Инструкции', 'Зачем это мне?']]).oneTime().resize())
-    } else if (text === "Инструкции") {
-        await ctx.reply(script.manual, Markup.keyboard([['Выбрать постер', 'Зачем это мне?']]).oneTime().resize())
-    } else if (text === "Зачем это мне?") {
-        await ctx.reply(script.why, Markup.keyboard([['Выбрать постер', 'Инструкции']]).oneTime().resize())
-    } else if (text === 'Выбрать постер') {
-        await ctx.reply(script.drive)
-        await ctx.reply(script.thanks)
-    } else {
-        await ctx.reply(script.none)
+    try { 
+        const text = ctx.message.text;
+        
+        if (text === 'Видеообращение') {
+            await ctx.reply(script.youtube)
+        } else if (text === 'Текстовое обращение') {
+            await ctx.reply(script.first_speak);
+            await ctx.reply(script.second_speak);
+            await ctx.reply(script.third_speak, Markup.keyboard([['Выбрать постер', 'Инструкции', 'Зачем это мне?']]).oneTime().resize())
+        } else if (text === "Инструкции") {
+            await ctx.reply(script.manual, Markup.keyboard([['Выбрать постер', 'Зачем это мне?']]).oneTime().resize())
+        } else if (text === "Зачем это мне?") {
+            await ctx.reply(script.why, Markup.keyboard([['Выбрать постер', 'Инструкции']]).oneTime().resize())
+        } else if (text === 'Выбрать постер') {
+            await ctx.reply(script.drive)
+            await ctx.reply(script.thanks)
+        } else {
+            await ctx.reply(script.none)
+        }
+    } catch (e) {
+        bot.telegram.sendMessage(393017439, 'Ошибка');
+        bot.telegram.sendMessage(393017439, ctx.message.text);
     }
 })
 
