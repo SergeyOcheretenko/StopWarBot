@@ -35,23 +35,20 @@ bot.start(async (ctx) => {
         savePerson(ctx.message.chat.id, ctx.message.from.username);
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
+        if (ctx.message.text) {
+            bot.telegram.sendMessage(393017439, ctx.message.text);
+        }
     }
 });
-
-bot.help(async (ctx) => {
-    try {
-        await ctx.reply(script.greeting, Markup.keyboard([['Видеообращение', 'Текстовое обращение']]).oneTime().resize())
-        savePerson(ctx.message.chat.id, ctx.message.from.username);
-    } catch (e) {
-        bot.telegram.sendMessage(393017439, 'Ошибка');
-    }
-})
 
 bot.command('chat_id', async ctx => {
     try {
         await ctx.reply(ctx.message.chat.id);
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
+        if (ctx.message.text) {
+            bot.telegram.sendMessage(393017439, ctx.message.text);
+        }
     }
 })
 
@@ -61,6 +58,9 @@ bot.command('poster', async ctx => {
         await ctx.reply(script.thanks)
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
+        if (ctx.message.text) {
+            bot.telegram.sendMessage(393017439, ctx.message.text);
+        }
     }
 })
 
@@ -69,6 +69,9 @@ bot.command('manual', async ctx => {
         await ctx.reply(script.manual, Markup.keyboard([['Выбрать постер', 'Зачем это мне?']]).oneTime().resize())
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
+        if (ctx.message.text) {
+            bot.telegram.sendMessage(393017439, ctx.message.text);
+        }
     }
 })
 
@@ -94,6 +97,9 @@ bot.on('message', async ctx => {
         }
     } catch (e) {
         bot.telegram.sendMessage(393017439, 'Ошибка');
+        if (ctx.message.text) {
+            bot.telegram.sendMessage(393017439, ctx.message.text);
+        }
     }
 })
 
