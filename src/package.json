@@ -1,0 +1,23 @@
+{
+  "name": "stopwarbot",
+  "version": "1.0.0",
+  "description": "A bot to help stop the war between Russia and Ukraine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeyOcheretenko/StopWarBot.git"
+  },
+  "author": "Sergey Ocheretenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SergeyOcheretenko/StopWarBot/issues"
+  },
+  "homepage": "https://github.com/SergeyOcheretenko/StopWarBot#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "telegraf": "^4.7.0"
+  }
+}
